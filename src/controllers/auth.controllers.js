@@ -1,9 +1,20 @@
 import User from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
+import { validationResult } from 'express-validator';
+
 
 const registerUser = async (req, res, next) => {
     try {
-        const { name, mobileNumber, password } = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const message = errors.array().map(error => error.msg).join('\n');
+            return res.status(400).json({
+                status: "fail",
+                message
+            });
+        }
+
+        const { firstName, lastName, mobileNumber, password } = req.body;
 
         // Check if the user already exists
         const existingUser = await User.findOne({ mobileNumber });
@@ -16,7 +27,7 @@ const registerUser = async (req, res, next) => {
 
 
         // Creating a new user
-        const newUser = await User.create({ name, mobileNumber, password });
+        const newUser = await User.create({ firstName, lastName, mobileNumber, password });
         
         if(!newUser) {
             return res.status(400).json({
@@ -39,6 +50,10 @@ const registerUser = async (req, res, next) => {
             data: user
         });
     } catch (error) {
+        res.status(500).json({
+            status: "failure",
+            message: "Failed registering a user"
+        })
         next(error);
     }
 }
@@ -78,7 +93,10 @@ const loginUser = async (req, res, next) => {
             token: token
         });
     } catch (error) {
-        next(error);
+        res.status(500).json({
+            status: "failure",
+            message: "Login failed"
+        })
     }
 }
 
