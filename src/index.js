@@ -21,5 +21,7 @@ connectDB()
 import reportRouter from "./routes/report.routes.js";
 import authRouter from "./routes/auth.routes.js";
 
-app.use("/report", reportRouter);
+import verifyUser from "./middlewares/auth.middleware.js"
+
+app.use("/report", verifyUser, reportRouter);
 app.use("/auth", authRouter);

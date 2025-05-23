@@ -26,12 +26,14 @@ const addReport = async (req, res, next) => {
         });
 
         res.status(201).json({
-            message: "Report added successfully"
+            message: "Report added successfully",
+            status: "success"
         });
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "adding report failed"
+            message: "adding report failed",
+            status: "fail"
         })
     }
 }
@@ -129,10 +131,11 @@ const groupReportByName = async (req, res, next) => {
 
         res.status(200).json(groupReport);
     } catch (error) {
-        console.log(error);
-        // res.status(500).json({
-        //     message: "failed fetching group's report"
-        // })
+        // console.log(error);
+        res.status(500).json({
+            message: "failed fetching group's report",
+            status:"fail"
+        })
     }
 }
 
