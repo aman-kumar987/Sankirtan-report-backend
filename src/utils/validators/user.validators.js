@@ -19,8 +19,10 @@ const UserValidator = [
         .trim()
         .notEmpty()
         .withMessage("Mobile number is required")
-        .isMobilePhone("any")
-        .withMessage("Invalid mobile number format"),
+        .isLength({ min: 10 })
+        .withMessage("Mobile number must be at least 10 characters long"),
+
+
 
     body("password")
         .trim()
