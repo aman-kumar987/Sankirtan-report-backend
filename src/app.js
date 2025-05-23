@@ -18,6 +18,8 @@ const corsOptions = {
   optionsSuccessStatus: 200 // For legacy browser support
 };
 
+app.use(cors(corsOptions));)
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
