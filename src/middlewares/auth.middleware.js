@@ -10,6 +10,17 @@ const verifyUser = async (req, res, next) => {
         
         if(!decodedToken) return res.status(401).json({message: "Token is not valid"});
 
+        req.user = decodedToken;
+
+        next()
+    } catch (error){
+        res.status(500).json({message: "Something went wrong can't authenticate user"})
+    }
+}
+
+const verifyAdmin = async (req, res, next) => {
+    try {
+        if(req.user.role !== "admin") return res.status(403).json({message: "You are not allowed to do that"});
         next()
     } catch (error){
         res.status(500).json({message: "Something went wrong can't authenticate user"})
@@ -17,5 +28,6 @@ const verifyUser = async (req, res, next) => {
 }
 
 export {
-    verifyUser
+    verifyUser,
+    verifyAdmin
 }

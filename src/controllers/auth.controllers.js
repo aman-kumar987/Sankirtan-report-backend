@@ -81,7 +81,11 @@ const loginUser = async (req, res, next) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ 
+            id: existingUser._id,
+            role: existingUser.role,
+            firstName: existingUser.firstName
+         }, process.env.JWT_SECRET);
 
         return res.status(200)
         .cookie("token", token, {

@@ -20,8 +20,11 @@ connectDB()
 
 import reportRouter from "./routes/report.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import adminRouter from "./routes/admin.routes.js";
 
-import {verifyUser} from "./middlewares/auth.middleware.js"
+import {verifyAdmin, verifyUser} from "./middlewares/auth.middleware.js";
+
 
 app.use("/report", verifyUser, reportRouter);
 app.use("/auth", authRouter);
+app.use("/admin", verifyUser, verifyAdmin, adminRouter);
