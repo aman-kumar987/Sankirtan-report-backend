@@ -104,7 +104,26 @@ const loginUser = async (req, res, next) => {
     }
 }
 
+const getUserRole = async (req, res) => {
+    try {
+        res.status(200).json({
+            status: "success",
+            message: "User role fetched successfully",
+            data: {
+                role: req.user.role,
+                firstName: req.user.firstName
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "failure",
+            message: "Failed fetching user role"
+        });
+    }
+}
+
 export {
     registerUser,
-    loginUser
+    loginUser,
+    getUserRole
 }
