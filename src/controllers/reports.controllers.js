@@ -40,12 +40,12 @@ const addReport = async (req, res, next) => {
 
 const groupWiseReport = async (req, res, next) => {
     try {
+        let latestPreviousDate = getLatestPreviousDate(ekadashiArray, new Date().toDateString())
         const groupsReport = await Report.aggregate([
             {
                 $match: {
                     date: {
-                        $gte: new Date(new Date("2025-05-08")),
-                        $lt: new Date(new Date("2025-05-23"))
+                        $gte: new Date(new Date(latestPreviousDate)),
                     }
                 }
             },
@@ -94,14 +94,14 @@ const groupReportByName = async (req, res, next) => {
             });
         }
         const { groupName } = req.body;
-        let latestPreviousDate = getLatestPreviousDate(ekadashiArray, new Date("2025-05-24").toDateString())
-        
+        let latestPreviousDate = getLatestPreviousDate(ekadashiArray, new Date().toDateString())
+        console.log(latestPreviousDate);
         const groupReport = await Report.aggregate([
             {
                 $match: {
                     groupName: groupName,
                     date: {
-                        $gte: [new Date(new Date(latestPreviousDate))]
+                        $gte: new Date(latestPreviousDate)
                     }
                 }
             },

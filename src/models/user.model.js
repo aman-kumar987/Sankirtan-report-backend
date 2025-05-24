@@ -25,6 +25,13 @@ const userSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid mobile number!`
     }
   },
+  role: {
+    type: String,
+    required: true,
+    trim: true,
+    default: "user",
+    enum: ["user", "admin"]
+  },
   password: {
     type: String,
     required: true,
