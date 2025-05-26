@@ -43,7 +43,7 @@ const reportSchema = Schema({
             message: props => `${props.value} is a future date. Date cannot be in the future!`
         }
     }
-})
+}, {timestamps: true})
 
 const Report = mongoose.model('Report', reportSchema);
 export default Report;
